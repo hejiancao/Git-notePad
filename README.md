@@ -1,6 +1,6 @@
 # Git-notePad
 介绍如何使用版本控制工具git以及遇到一些常见问题如何解决
-
+[readme.md写法](https://blog.csdn.net/htwhtw123/article/details/77069581)
 
 [参考链接](https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000)<br>
 首先，选择一个合适的地方，创建一个空目录：<br/>
@@ -93,6 +93,88 @@ stash@{0}: WIP on dev: f52c633 add merge
 当手头工作没有完成时，先把工作现场git stash一下，然后去修复bug，修复后，再git stash pop，回到工作现场。
 如果有多个stash，git stash pop stash@{id} 或者 git stash apply stash@{id}
 ```
+
+```
+git remote 查看远程库的信息
+git remote -v  显示更详细的信息
+```
+
+### 多人协作
+多人协作的工作模式通常是这样：<br>
+1.首先，可以试图用git push origin <branch-name>推送自己的修改；<br>
+2.如果推送失败，则因为远程分支比你的本地更新，需要先用git pull试图合并；<br>
+3.如果合并有冲突，则解决冲突，并在本地提交；<br>
+4.没有冲突或者解决掉冲突后，再用git push origin <branch-name>推送就能成功！<br>
+5.如果git pull提示no tracking information，则说明本地分支和远程分支的链接关系没有创建，用命令git branch --set-upstream-to <branch-name> origin/<branch-name>。
+  
+### 忽略提交
+在项目中有些配置文件不需要提交，但是有同学在后面开发中发现在.igonore文件中无论如何都无法忽略某些文件的提交。<br>
+原因在这里：<br>
+已经维护起来的文件，即使加上了gitignore，也无济于事。----<br>
+那么如何解决呢？方式如下<br>
+git update-index --assume-unchanged   要忽略的文件夹/文件夹下文件名<br>
+比如我要忽略项目下.idea文件夹下所有xml文件,idea下都是xml文件（我用的webstorm）：<br>
+git update-index --assume-unchanged   .idea/*.xml<br>
+如果要重新恢复提交，使用如下命令：<br>
+git update-index --no-assume-unchanged   .idea/*.xml<br>
+这样每次提交就不会提交idea下的文件了。<br>
+
+
+
+### 从远程仓库克隆
+```
+$ git clone git@github.com:hejiancao/gitskills.git
+```
+
+### 添加远程库
+假如在本地创建了一个git仓库，又想在github创建一个git仓库，并且让这两个仓库进行远程同步。
+```
+
+登陆github，“Create a new repo”,创建一个新的仓库
+$ git remote add origin git@github.com:hejiancao/test.git 这步是关联两个仓库
+$ git push -u origin master
+由于远程库是空的，我们第一次推送master分支时，加上了-u参数，Git不但会把本地的master分支内容推送的远程新的master分支，还会把本地的master分支和远程的master分支关联起来，在以后的推送或者拉取时就可以简化命令。
+```
+
+
+## 常见问题
+如果发生以下错误，是因为ssh秘钥的问题，需要按照下面步骤重新设置秘钥
+```
+$ git push -u origin master
+ERROR: Permission to michaelliao/learngit.git denied to anna.
+```
+解决方案：<br>
+	1. git bash之后，重新设置名字和邮箱, git config --global user.name "yourname", git config --global user.email“your@email.com"<br>
+	2. 切换到C盘，搜索.ssh文件夹，删除known_hosts文件<br>
+	3. $ ssh-keygen -t rsa -C "your@email.com" , 直接点回车，说明会在默认文件id_rsa上生成ssh key , 然后系统要求输入密码，直接按回车表示不设密码， 重复密码时也是直接回车，之后提示你shh key已经生成成功。<br>
+	4. 然后系统会自动在.ssh文件夹下生成两个文件，id_rsa和id_rsa.pub，用记事本打开id_rsa.pub，全部复制<br>
+	5. 打开https://github.com/，登陆你的账户，进入设置,找到"SSH and GPG keys" ,  "New SSH key" ,  把刚刚复制的key粘贴进去，点击"Add SSH key"<br>
+	6. 输入命令：ssh -T git@github.com , 然后跳出一推话，输入yes，然后提示你成功了！<br>
+	7. 退出git重新进入路径即可<br>
+如果需要同步协作，只需要把本地的sshkey告诉管理者，管理者在gibhub上添加你的sshkey即可。<br>
+
+在把本地库第一次推送到远程库的时候，如果出现提示
+```
+Updates were rejected because the tip of your current branch is behind
+```
+解决方案如下：<br>
+	1. git pull origin master --allow-unrelated-histories<br>
+	2. git push -u origin master<br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
