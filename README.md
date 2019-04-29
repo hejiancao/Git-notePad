@@ -137,8 +137,8 @@ $ git push -u origin master
 ```
 
 
-## 常见问题
-如果发生以下错误，是因为ssh秘钥的问题，需要按照下面步骤重新设置秘钥
+# 常见问题
+### 如果发生以下错误，是因为ssh秘钥的问题，需要按照下面步骤重新设置秘钥
 ```
 $ git push -u origin master
 ERROR: Permission to michaelliao/learngit.git denied to anna.
@@ -153,7 +153,7 @@ ERROR: Permission to michaelliao/learngit.git denied to anna.
 	7. 退出git重新进入路径即可<br>
 如果需要同步协作，只需要把本地的sshkey告诉管理者，管理者在gibhub上添加你的sshkey即可。<br>
 
-在把本地库第一次推送到远程库的时候，如果出现提示
+### 在把本地库第一次推送到远程库的时候，如果出现提示
 ```
 Updates were rejected because the tip of your current branch is behind
 ```
