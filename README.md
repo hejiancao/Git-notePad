@@ -143,12 +143,12 @@ $ git push -u origin master
 $ git push -u origin master
 ERROR: Permission to michaelliao/learngit.git denied to anna.
 ```
->解决方案：
+>解决方案：<br>
 	1. git bash之后，重新设置名字和邮箱, git config --global user.name "yourname", git config --global user.email“your@email.com"<br>
 	2. 切换到C盘，搜索.ssh文件夹，删除known_hosts文件<br>
 	3. $ ssh-keygen -t rsa -C "your@email.com" , 直接点回车，说明会在默认文件id_rsa上生成ssh key , 然后系统要求输入密码，直接按回车表示不设密码， 重复密码时也是直接回车，之后提示你shh key已经生成成功。<br>
 	4. 然后系统会自动在.ssh文件夹下生成两个文件，id_rsa和id_rsa.pub，用记事本打开id_rsa.pub，全部复制<br>
-	5. 打开https://github.com/，登陆你的账户，进入设置,找到"SSH and GPG keys" ,  "New SSH key" ,  把刚刚复制的key粘贴进去，点击"Add SSH key"<br>
+	5. 打开https://github.com ， 登陆你的账户，进入设置,找到"SSH and GPG keys" ,  "New SSH key" ,  把刚刚复制的key粘贴进去，点击"Add SSH key"<br>
 	6. 输入命令：ssh -T git@github.com , 然后跳出一推话，输入yes，然后提示你成功了！<br>
 	7. 退出git重新进入路径即可<br>
 如果需要同步协作，只需要把本地的sshkey告诉管理者，管理者在gibhub上添加你的sshkey即可。<br>
@@ -157,7 +157,7 @@ ERROR: Permission to michaelliao/learngit.git denied to anna.
 ```
 Updates were rejected because the tip of your current branch is behind
 ```
->解决方案如下：
+>解决方案如下：<br>
 	1. git pull origin master --allow-unrelated-histories<br>
 	2. git push -u origin master<br>
 
